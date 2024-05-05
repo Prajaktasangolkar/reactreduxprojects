@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector,useDispatch } from 'react-redux';
 
-import { removeTodo } from '../features/todo/todoSlice'
+import { removeTodo, updateTodo } from '../features/todo/todoSlice'
 
 function Todos() {
    const todos= useSelector(state=>state.todos) //aceess anything
@@ -35,6 +35,17 @@ function Todos() {
                 />
               </svg>
             </button>
+            <button
+  onClick={() => {
+    const newText = prompt("Enter new text for the todo:");
+    if (newText !== null && newText.trim() !== "") {
+      dispatch(updateTodo({ id: todo.id, text: newText }));
+    }
+  }}
+  className="text-white bg-blue-500 border-0 py-1 px-4 focus:outline-none hover:bg-blue-600 rounded text-md"
+>
+  Update
+</button>
           </li>
         ))}
       </ul>
