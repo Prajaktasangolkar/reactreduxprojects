@@ -1,18 +1,35 @@
-import React from 'react'
+import React, {  useState } from 'react'
+import {useDispatch} from 'react-redux'
+import { addPost } from '../context/PostContext'
 
 function CreatePost() {
+  const [username,setUsername]=useState('')
+  const[title,setTitle]=useState('')
+  const [content,setContent]=useState('')
+  
+
+  const dispatch=useDispatch()
+  const handleClick=(e)=>{
+        e.preventDefault()
+        dispatch(addPost({username,title,content}))
+        setUsername('')
+        setTitle('')
+        setContent('')
+  }
+
   return (
     <form className="create-post" >
       <div className="mb-3">
         <label htmlFor="userId" className="form-label">
-          Enter your User Id here
+          Enter your User name here
         </label>
         <input
           type="text"
-         
           className="form-control"
           id="userId"
           placeholder="Your User Id"
+          value={username}
+          onChange={(e)=>setUsername(e.target.value)}
         />
       </div>
 
@@ -25,6 +42,8 @@ function CreatePost() {
           className="form-control"
           id="title"
           placeholder="How are you feeling today..."
+          value={title}
+          onChange={(e)=>setTitle(e.target.value)}
         />
       </div>
 
@@ -38,34 +57,13 @@ function CreatePost() {
           className="form-control"
           id="body"
           placeholder="Tell us more about it"
+          value={content}
+          onChange={(e)=>setContent(e.target.value)}
         />
       </div>
 
-      <div className="mb-3">
-        <label htmlFor="reactions" className="form-label">
-          Number of reactions
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="reactions"
-          placeholder="How many people reacted to this post"
-        />
-      </div>
 
-      <div className="mb-3">
-        <label htmlFor="tags" className="form-label">
-          Enter your hashtags here
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="tags"
-          placeholder="Please enter tags using space"
-        />
-      </div>
-
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary" onClick={handleClick}>
         Post
       </button>
     </form>
